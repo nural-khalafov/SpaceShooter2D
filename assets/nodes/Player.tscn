@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://csftiwfv2vpeb"]
+
+[ext_resource type="Texture2D" uid="uid://b0g5ddvfjk2if" path="res://assets/2D Content/Ships/assault_x5.png" id="1_a2f25"]
+[ext_resource type="Script" path="res://assets/scripts/ship/Player.gd" id="1_tpm08"]
+[ext_resource type="Script" path="res://assets/scripts/ship/ShipController.gd" id="2_uya4y"]
+[ext_resource type="Script" path="res://assets/scripts/ship/HullSystem.gd" id="4_gffee"]
+[ext_resource type="Script" path="res://assets/scripts/module/WeaponSystem.gd" id="5_lffei"]
+
+[node name="Player" type="Node2D" node_paths=PackedStringArray("hullSystem") groups=["player"]]
+script = ExtResource("1_tpm08")
+hullSystem = NodePath("HullSystem")
+
+[node name="ShipBody" type="CharacterBody2D" parent="."]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("2_uya4y")
+
+[node name="ShipSprite" type="Sprite2D" parent="ShipBody"]
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_a2f25")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ShipBody"]
+rotation = 1.5708
+polygon = PackedVector2Array(-16, -64, -16, -64, -8, -96, 0, -96, 8, -96, 16, -64, 32, 8, 48, 16, 80, 72, 40, 96, 0, 104, -40, 96, -80, 72, -48, 16, -40, 8)
+one_way_collision = true
+
+[node name="Camera2D" type="Camera2D" parent="ShipBody"]
+
+[node name="HullSystem" type="Node" parent="."]
+script = ExtResource("4_gffee")
+
+[node name="WeaponSystem" type="Node" parent="."]
+script = ExtResource("5_lffei")
+
+[node name="ModuleSystem" type="Node" parent="."]

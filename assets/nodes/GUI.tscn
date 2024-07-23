@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://bnfvmllmlkk8e"]
+
+[ext_resource type="Texture2D" uid="uid://kamt74ame7lb" path="res://assets/2D Content/GUI/hull_panel_gui.png" id="1_sstfu"]
+[ext_resource type="Texture2D" uid="uid://0i1qp0nt6dgc" path="res://assets/2D Content/GUI/shield_panel_gui.png" id="2_hy8q3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e5x01"]
+bg_color = Color(0, 0.717899, 0.37048, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vxj32"]
+bg_color = Color(0, 0.305882, 0.764706, 1)
+
+[node name="GUI" type="CanvasLayer"]
+
+[node name="HullPointPanel" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_sstfu")
+
+[node name="HProgressBar" type="ProgressBar" parent="HullPointPanel"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 247.0
+offset_bottom = 27.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_e5x01")
+value = 80.0
+show_percentage = false
+
+[node name="ShieldPointPanel" type="TextureRect" parent="."]
+offset_top = 55.0
+offset_right = 225.0
+offset_bottom = 104.0
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_hy8q3")
+
+[node name="SProgressBar" type="ProgressBar" parent="ShieldPointPanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 9.0
+offset_right = 197.0
+offset_bottom = 21.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_vxj32")
+value = 80.0
+show_percentage = false
