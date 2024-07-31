@@ -1,5 +1,3 @@
-extends Node
-class_name Weapon
-
+class_name Weapon extends Node
 
 

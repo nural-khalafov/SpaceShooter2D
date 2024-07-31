@@ -1,7 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://bnfvmllmlkk8e"]
+[gd_scene load_steps=9 format=3 uid="uid://bnfvmllmlkk8e"]
 
 [ext_resource type="Texture2D" uid="uid://kamt74ame7lb" path="res://assets/2D Content/GUI/hull_panel_gui.png" id="1_sstfu"]
 [ext_resource type="Texture2D" uid="uid://0i1qp0nt6dgc" path="res://assets/2D Content/GUI/shield_panel_gui.png" id="2_hy8q3"]
+[ext_resource type="Texture2D" uid="uid://c1xaynlabdyd3" path="res://assets/2D Content/GUI/energy_panel_gui.png" id="3_46gwy"]
+[ext_resource type="Texture2D" uid="uid://c8qthkp2wyl8v" path="res://assets/2D Content/GUI/Energy Panel_bar.png" id="4_yrjmp"]
+[ext_resource type="Texture2D" uid="uid://cg5emlbrnlknp" path="res://assets/2D Content/GUI/Energy Panel_bar_progress.png" id="5_n11iy"]
+[ext_resource type="Script" path="res://assets/scripts/GUI/EnergyBar.gd" id="6_7suvf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e5x01"]
 bg_color = Color(0, 0.717899, 0.37048, 1)
@@ -43,3 +47,22 @@ offset_bottom = 21.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_vxj32")
 value = 80.0
 show_percentage = false
+
+[node name="EnergyPanel" type="TextureRect" parent="."]
+offset_left = 67.0
+offset_top = 100.0
+offset_right = 385.0
+offset_bottom = 125.0
+texture = ExtResource("3_46gwy")
+
+[node name="EnergyProgressBar" type="TextureProgressBar" parent="EnergyPanel"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 2.0
+offset_right = 196.0
+offset_bottom = 15.0
+scale = Vector2(1.49, 1.475)
+texture_under = ExtResource("4_yrjmp")
+texture_progress = ExtResource("5_n11iy")
+tint_under = Color(1, 1, 1, 0.392157)
+script = ExtResource("6_7suvf")

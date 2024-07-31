@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://dv1lgtbnrqyqw"]
+
+[ext_resource type="Script" path="res://assets/nodes/CurrentStateLabel.gd" id="1_vhgc4"]
+
+[node name="TestingUI" type="CanvasLayer"]
+
+[node name="TestingPanel" type="Panel" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -297.0
+offset_bottom = 256.0
+grow_horizontal = 0
+
+[node name="CurrentStateLabel" type="RichTextLabel" parent="TestingPanel"]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 287.0
+offset_bottom = 25.0
+text = "current_state = "
+script = ExtResource("1_vhgc4")

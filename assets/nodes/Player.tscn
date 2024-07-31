@@ -1,36 +1,85 @@
-[gd_scene load_steps=6 format=3 uid="uid://csftiwfv2vpeb"]
+[gd_scene load_steps=14 format=3 uid="uid://csftiwfv2vpeb"]
 
 [ext_resource type="Texture2D" uid="uid://b0g5ddvfjk2if" path="res://assets/2D Content/Ships/assault_x5.png" id="1_a2f25"]
-[ext_resource type="Script" path="res://assets/scripts/ship/Player.gd" id="1_tpm08"]
-[ext_resource type="Script" path="res://assets/scripts/ship/ShipController.gd" id="2_uya4y"]
-[ext_resource type="Script" path="res://assets/scripts/ship/HullSystem.gd" id="4_gffee"]
-[ext_resource type="Script" path="res://assets/scripts/module/WeaponSystem.gd" id="5_lffei"]
+[ext_resource type="Script" path="res://assets/scripts/ship/ship_controller.gd" id="2_uya4y"]
+[ext_resource type="Script" path="res://assets/scripts/ship/Player.gd" id="3_c7yki"]
+[ext_resource type="Script" path="res://assets/scripts/components/ship_move_component.gd" id="4_fakwm"]
+[ext_resource type="Script" path="res://assets/scripts/ship/hull_system.gd" id="4_gffee"]
+[ext_resource type="Script" path="res://assets/scripts/state machine/states/idle.gd" id="4_ix8vg"]
+[ext_resource type="Script" path="res://assets/scripts/state machine/state_machine.gd" id="4_to2mj"]
+[ext_resource type="Script" path="res://assets/scripts/module/weapon_system.gd" id="5_lffei"]
+[ext_resource type="Script" path="res://assets/scripts/state machine/states/flying.gd" id="5_wmdnc"]
+[ext_resource type="Script" path="res://assets/scripts/module/module_system.gd" id="6_gicm5"]
+[ext_resource type="Script" path="res://assets/scripts/state machine/states/boosting.gd" id="6_jq7xs"]
+[ext_resource type="Script" path="res://assets/scripts/state machine/states/firing.gd" id="7_itfva"]
+[ext_resource type="Script" path="res://assets/scripts/state machine/states/recharging.gd" id="8_7fsjg"]
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("hullSystem") groups=["player"]]
-script = ExtResource("1_tpm08")
-hullSystem = NodePath("HullSystem")
-
-[node name="ShipBody" type="CharacterBody2D" parent="."]
+[node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("2_uya4y")
 
-[node name="ShipSprite" type="Sprite2D" parent="ShipBody"]
+[node name="ShipSprite" type="Sprite2D" parent="."]
 rotation = 1.5708
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_a2f25")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ShipBody"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 rotation = 1.5708
 polygon = PackedVector2Array(-16, -64, -16, -64, -8, -96, 0, -96, 8, -96, 16, -64, 32, 8, 48, 16, 80, 72, 40, 96, 0, 104, -40, 96, -80, 72, -48, 16, -40, 8)
 one_way_collision = true
 
-[node name="Camera2D" type="Camera2D" parent="ShipBody"]
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.3, 1.3)
 
-[node name="HullSystem" type="Node" parent="."]
+[node name="PlayerSettings" type="Node" parent="."]
+script = ExtResource("3_c7yki")
+
+[node name="movement_state_machine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("4_to2mj")
+starting_state = NodePath("idle")
+
+[node name="idle" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("boosting_state", "flying_state")]
+script = ExtResource("4_ix8vg")
+boosting_state = NodePath("../boosting")
+flying_state = NodePath("../flying")
+
+[node name="flying" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("boosting_state", "idle_state")]
+script = ExtResource("5_wmdnc")
+boosting_state = NodePath("../boosting")
+idle_state = NodePath("../idle")
+
+[node name="boosting" type="Node" parent="movement_state_machine" node_paths=PackedStringArray("flying_state", "boosting_state", "idle_state")]
+script = ExtResource("6_jq7xs")
+flying_state = NodePath("../flying")
+boosting_state = NodePath(".")
+idle_state = NodePath("../idle")
+
+[node name="weapon_state_machine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("4_to2mj")
+starting_state = NodePath("../movement_state_machine/idle")
+
+[node name="idle" type="Node" parent="weapon_state_machine" node_paths=PackedStringArray("boosting_state", "flying_state")]
+script = ExtResource("4_ix8vg")
+boosting_state = NodePath("../../movement_state_machine/boosting")
+flying_state = NodePath("../../movement_state_machine/flying")
+
+[node name="firing" type="Node" parent="weapon_state_machine"]
+script = ExtResource("7_itfva")
+
+[node name="recharging" type="Node" parent="weapon_state_machine"]
+script = ExtResource("8_7fsjg")
+
+[node name="ship_move_component" type="Node" parent="."]
+script = ExtResource("4_fakwm")
+
+[node name="systems" type="Node" parent="."]
+
+[node name="hull_system" type="Node" parent="systems"]
 script = ExtResource("4_gffee")
 
-[node name="WeaponSystem" type="Node" parent="."]
+[node name="weapon_system" type="Node" parent="systems"]
 script = ExtResource("5_lffei")
 
-[node name="ModuleSystem" type="Node" parent="."]
+[node name="module_system" type="Node" parent="systems"]
+script = ExtResource("6_gicm5")

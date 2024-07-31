@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://c6y15erxai5bf"]
+[gd_scene load_steps=5 format=3 uid="uid://c6y15erxai5bf"]
 
 [ext_resource type="PackedScene" uid="uid://bnfvmllmlkk8e" path="res://assets/nodes/GUI.tscn" id="1_3e0cx"]
 [ext_resource type="PackedScene" uid="uid://csftiwfv2vpeb" path="res://assets/nodes/Player.tscn" id="2_hvok0"]
 [ext_resource type="PackedScene" uid="uid://dysd5bg555fl7" path="res://assets/nodes/target_asteroid.tscn" id="3_l8gb1"]
+[ext_resource type="PackedScene" uid="uid://dv1lgtbnrqyqw" path="res://assets/nodes/testing_ui.tscn" id="4_gucst"]
 
-[node name="Node" type="Node"]
+[node name="Test Scene" type="Node"]
 
 [node name="GUI" parent="." instance=ExtResource("1_3e0cx")]
 
@@ -13,3 +14,14 @@ position = Vector2(650, 350)
 
 [node name="Target_asteroid" parent="." instance=ExtResource("3_l8gb1")]
 position = Vector2(896, 104)
+
+[node name="Target_asteroid2" parent="." instance=ExtResource("3_l8gb1")]
+position = Vector2(1687, -459)
+
+[node name="Target_asteroid3" parent="." instance=ExtResource("3_l8gb1")]
+position = Vector2(1220, -493)
+
+[node name="Target_asteroid4" parent="." instance=ExtResource("3_l8gb1")]
+position = Vector2(1449, -1132)
+
+[node name="TestingUI" parent="." instance=ExtResource("4_gucst")]
